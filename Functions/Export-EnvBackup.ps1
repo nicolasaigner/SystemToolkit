@@ -21,25 +21,19 @@ function Export-EnvBackup {
 
     if ($PSCmdlet.ShouldProcess('Environment', "Export to $OutDir")) {
         New-Item -ItemType Directory -Path $OutDir -Force | Out-Null
-
-        reg.exe export "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "$OutDir\SystemEnvironment.reg" /y
-        reg.exe export "HKCU\Environment"                         "$OutDir\UserEnvironment.reg" /y
-        reg.exe export "HKEY_USERS\.DEFAULT\Environment"          "$OutDir\DefaultUserEnvironment.reg" /y
+        reg export "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" "$OutDir\SystemEnvironment.reg" /y
+        reg export "HKCU\Environment" "$OutDir\UserEnvironment.reg" /y
+        reg export "HKEY_USERS\.DEFAULT\Environment" "$OutDir\DefaultUserEnvironment.reg" /y
 
         $jsonOpts = @{Depth = 3; Compress = $false}
-
         Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Control\Session Manager\Environment' |
-            Select-Object -ExcludeProperty PS* |
-            ConvertTo-Json @jsonOpts | Set-Content -Encoding UTF8 "$OutDir\SystemEnvironment.json"
-
+            Select-Object -ExcludeProperty PS* | ConvertTo-Json @jsonOpts |
+            Set-Content "$OutDir\SystemEnvironment.json" -Encoding utf8
         Get-ItemProperty -Path 'HKCU:\Environment' |
-            Select-Object -ExcludeProperty PS* |
-            ConvertTo-Json @jsonOpts | Set-Content -Encoding UTF8 "$OutDir\UserEnvironment.json"
-
+            Select-Object -ExcludeProperty PS* | ConvertTo-Json @jsonOpts |
+            Set-Content "$OutDir\UserEnvironment.json" -Encoding utf8
         Get-ItemProperty -Path 'Registry::HKEY_USERS\.DEFAULT\Environment' -ErrorAction SilentlyContinue |
-            Select-Object -ExcludeProperty PS* |
-            ConvertTo-Json @jsonOpts | Set-Content -Encoding UTF8 "$OutDir\DefaultUserEnvironment.json"
-
-        Write-Output $OutDir
+            Select-Object -ExcludeProperty PS* | ConvertTo-Json @jsonOpts |
+            Set-Content "$OutDir\DefaultUserEnvironment.json" -Encoding utf8
     }
 }
