@@ -1,3 +1,4 @@
+Import-Module "$PSScriptRoot\..\NicolasAigner.SystemToolkit.psd1" -Force
 
 Describe 'Export-EnvBackup' {
     It 'Gera pasta e arquivos' {

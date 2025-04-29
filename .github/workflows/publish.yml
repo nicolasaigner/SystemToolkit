@@ -15,7 +15,9 @@ jobs:
 
       - name: Run Pester tests
         shell: pwsh
-        run: Invoke-Pester -CI
+        run: |
+          Import-Module "$PWD\NicolasAigner.SystemToolkit.psd1" -Force
+          Invoke-Pester -CI
 
       - name: Publish module
         shell: pwsh
