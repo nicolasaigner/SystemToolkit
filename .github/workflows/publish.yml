@@ -6,24 +6,22 @@ on:
 jobs:
   publish:
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v4
-
-      - name: Setup PowerShell 7
-        uses: actions/setup-powershell@v2
-        with:
-          pwsh-version: 7.4.x
-
       - name: Install PSResourceGet
         shell: pwsh
         run: Install-Module Microsoft.PowerShell.PSResourceGet -Force -Scope CurrentUser
 
-      - name: Run Pester
+      - name: Run Pester tests
         shell: pwsh
         run: Invoke-Pester -CI
 
-      - name: Publish Module
+      - name: Publish module
         shell: pwsh
         env:
           PSGALLERY_APIKEY: ${{ secrets.PSGALLERY_APIKEY }}
-        run: Publish-PSResource -Path . -Repository PSGallery -ApiKey $env:PSGALLERY_APIKEY
+        run: >
+          Publish-PSResource -Path . `
+                             -Repository PSGallery `
+                             -ApiKey $env:PSGALLERY_APIKEY
