@@ -10,7 +10,7 @@ Installers:
   - Architecture: x64
     InstallerType: Powershell
     InstallerUrl: https://www.powershellgallery.com/api/v2/package/NicolasAigner.SystemToolkit/1.0.0
-    InstallerSha256: FILL_ME_AFTER_PUBLISH
+    InstallerSha256: 1E8B503A78C876992E9719D3377B70C1E161C3BE17F4B794FBD10B64C9D87D85
     Commands:
       - Export-EnvBackup
       - Merge-EnvFromBackup
