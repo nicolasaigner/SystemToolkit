@@ -1,0 +1,18 @@
+PackageIdentifier: NicolasAigner.SystemToolkit
+PackageVersion: 1.0.0
+PackageName: NicolasAigner SystemToolkit
+Publisher: Nicolas Aigner
+PublisherUrl: https://github.com/nicolasaigner
+License: MIT
+LicenseUrl: https://opensource.org/licenses/MIT
+Homepage: https://github.com/nicolasaigner/SystemToolkit
+Installers:
+  - Architecture: x64
+    InstallerType: Powershell
+    InstallerUrl: https://www.powershellgallery.com/api/v2/package/NicolasAigner.SystemToolkit/1.0.0
+    InstallerSha256: FILL_ME_AFTER_PUBLISH
+    Commands:
+      - Export-EnvBackup
+      - Merge-EnvFromBackup
+      - Export-RegistrySelection
+      - Compress-FolderToTarGz
