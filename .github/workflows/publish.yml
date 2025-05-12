@@ -19,7 +19,7 @@ jobs:
           Import-Module "$PWD\NicolasAigner.SystemToolkit.psd1" -Force
           Invoke-Pester -CI
 
-      - name: Ensure PSGallery repo exists            # ← novo
+      - name: Ensure PSGallery repo exists
         shell: pwsh
         run: |
           $repo = Get-PSResourceRepository -Name PSGallery -ErrorAction SilentlyContinue
