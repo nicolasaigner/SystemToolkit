@@ -1,6 +1,16 @@
-# Auto‑loader: importa todas as funções do subdiretório Functions
-$funcPath = Join-Path $PSScriptRoot 'Functions'
-foreach ($file in Get-ChildItem -Path $funcPath -Filter '*.ps1') {
-    . $file.FullName
+# SystemToolkit.psm1 - Módulo principal do SystemToolkit v1.1.0
+
+# Carrega todas as funções do módulo
+Get-ChildItem -Path $PSScriptRoot\Functions\*.ps1 -Recurse | ForEach-Object {
+    . $_.FullName
 }
-Export-ModuleMember -Function (Get-ChildItem -Path $funcPath -Filter '*.ps1').BaseName
+
+# Exporta explicitamente as funções públicas
+Export-ModuleMember -Function `
+    'Export-EnvBackup', `
+    'Merge-EnvFromBackup', `
+    'Export-RegistrySelection', `
+    'Compress-FolderToTarGz', `
+    'Update-MacroKeyboard', `
+    'Edit-MacroKeyboardConfig', `
+    'Invoke-MacroKeyboardToolCommand'

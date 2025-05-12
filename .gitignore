@@ -1,3 +1,6 @@
 .git
 .idea
 .vscode
+Fix-AllEnv.ps1
+Functions.MacroKeyboard.ps1
+Functions.System.ps1
