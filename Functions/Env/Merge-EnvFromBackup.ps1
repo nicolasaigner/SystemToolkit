@@ -8,8 +8,8 @@
     • Cria ponto-de-retorno (reg export) antes de mexer.  
     • Deduplica entradas de Path, remove “System.String[]” e
       reinserta segmentos vitais do Windows.  
-    • Mantém seus caminhos personalizados (nvm, Python 3.13,
-      JetBrains, VS Code, PlatformIO, scripts pessoais).  
+    • Mantém caminhos personalizados fornecidos via -UserCustomPath
+      e -SystemCustomPath.  
     • Preserva CPU-dependentes (NUMBER_OF_PROCESSORS).  
     • Para variáveis que existiam só no host (p.ex. NVM_HOME)
       nada é removido.
@@ -31,22 +31,13 @@ function Merge-EnvFromBackup {
         [Parameter(Mandatory)]
         [string]$BackupDir,
 
-        # Permite estender/ajustar seus caminhos pessoais sem editar o código
-        [string[]]$UserCustomPath   = @(
-            "D:\CONFIGURACOES_PERSONALIZADAS\PowerShell\Scripts",
-            "D:\CONFIGURACOES_PERSONALIZADAS\nvm",
-            "D:\CONFIGURACOES_PERSONALIZADAS\nvm\nodejs",
-            "C:\Users\$env:USERNAME\AppData\Local\Programs\Python\Launcher\",
-            "C:\Users\$env:USERNAME\AppData\Local\Programs\Python\Python313\",
-            "C:\Users\$env:USERNAME\AppData\Local\Programs\Python\Python313\Scripts\",
-            "C:\Users\$env:USERNAME\AppData\Local\Programs\Microsoft VS Code\bin",
-            "C:\Users\$env:USERNAME\AppData\Local\JetBrains\Toolbox\scripts",
-            "C:\Users\$env:USERNAME\AppData\Local\Microsoft\WinGet\Links"
-        ),
+        # Caminhos adicionais do usuário para incluir no Path (User scope).
+        # Passe seus caminhos personalizados aqui, ex:
+        #   -UserCustomPath @("D:\MeusScripts", "D:\nvm", "D:\nvm\nodejs")
+        [string[]]$UserCustomPath   = @(),
 
-        [string[]]$SystemCustomPath = @(
-            "C:\.platformio\penv\Scripts"
-        )
+        # Caminhos adicionais do sistema para incluir no Path (Machine scope).
+        [string[]]$SystemCustomPath = @()
     )
 
     # ---------- 1. Carrega backup ---------- #
